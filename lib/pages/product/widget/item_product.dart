@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pemrogramanbergerak/UPDATE%20DATA%20BPS/models/product_model.dart';
+import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
 
 class ItemProduct extends StatelessWidget {
    ItemProduct({super.key, required this.barang});

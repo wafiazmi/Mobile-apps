@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pemrogramanbergerak/UPDATE%20DATA%20BPS/models/product_model.dart';
-import 'package:pemrogramanbergerak/product/item_product.dart';
+import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
+import 'package:pemrogramanbergerak/pages/product/widget/item_product.dart';
 // import 'package:praktikum_list_view/pages/product/item_product.dart';
 
 class MenuProduct extends StatefulWidget {
@@ -174,10 +174,10 @@ class _MenuProductState extends State<MenuProduct> {
           "Produk",
           style: TextStyle(
             fontSize: 24,
-            fontWeight: FontWeight.bold,
+            color: Colors.green,
           ),
         ),
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Container(
@@ -205,14 +205,18 @@ class _MenuProductState extends State<MenuProduct> {
         child: ElevatedButton(
           onPressed: () {}, 
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.teal,
+            backgroundColor: Colors.green,
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
             textStyle: const TextStyle(fontSize: 18),
           ),
-          child: Text("Add Product"),
+          child: Text("Add Product",
+          style: TextStyle(
+            color: Colors.white,
+            ),
+          ),
         ),
       ),
     );
