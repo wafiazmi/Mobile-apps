@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pemrogramanbergerak/pages/profile/foto.dart';
 import 'package:pemrogramanbergerak/pages/menu_utama.dart';
-import 'package:pemrogramanbergerak/pages/profile.dart';
+import 'package:pemrogramanbergerak/pages/profile/edit_profile.dart';
+import 'package:pemrogramanbergerak/pages/profile/profile.dart';
 import 'package:pemrogramanbergerak/pages/product/widget/item_product.dart';
 
 
@@ -13,12 +15,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MenuUtama(),
     );
   }
 }
+
 
 
   
