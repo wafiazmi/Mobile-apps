@@ -48,6 +48,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       right: 0,
                       child: GestureDetector(
                         onTap: () {
+                          // Navigasi ke halaman foto
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Foto()));
                         },
                         child: CircleAvatar(

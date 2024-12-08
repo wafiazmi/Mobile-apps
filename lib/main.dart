@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pemrogramanbergerak/kategori-barang/kategori_barang.dart';
 import 'package:pemrogramanbergerak/pages/profile/foto.dart';
 import 'package:pemrogramanbergerak/pages/menu_utama.dart';
 import 'package:pemrogramanbergerak/pages/profile/edit_profile.dart';
