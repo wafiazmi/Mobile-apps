@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import "package:pemrogramanbergerak/kategori-barang/kategori_barang.dart";
 import "package:pemrogramanbergerak/pages/product/menu_product.dart";
 import "package:pemrogramanbergerak/pages/report/main.dart";
 import "sample.dart";
@@ -64,7 +65,7 @@ class _MenuUtamaState extends State<MenuUtama> {
     MenuItemData(
       title: "Product Category",
       imagePath: "assets/box.png",
-      navigateTo: const SamplePage(),
+      navigateTo: const Kategori(),
     ),
   ];
 

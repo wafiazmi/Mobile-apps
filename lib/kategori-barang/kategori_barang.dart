@@ -82,7 +82,7 @@ class Kategori extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            // Aksi kembali
+            Navigator.pop(context);
           },
         ),
       ),
