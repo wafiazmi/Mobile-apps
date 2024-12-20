@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import "package:pemrogramanbergerak/kategori-barang/kategori_barang.dart";
+import "package:pemrogramanbergerak/manajemen-stok/manajemen.dart";
 import "package:pemrogramanbergerak/pages/product/menu_product.dart";
 import "package:pemrogramanbergerak/pages/report/main.dart";
 import "sample.dart";
@@ -60,12 +61,18 @@ class _MenuUtamaState extends State<MenuUtama> {
   final List<MenuItemData> _menuItems = [
     MenuItemData(
       title: "Products and Services",
-      imagePath: "assets/delivery-box.png",
-      navigateTo: const MenuProduct(),    ),
+      imagePath: "assets/suplier.png",
+      navigateTo: const MenuProduct(),
+    ),
     MenuItemData(
       title: "Product Category",
-      imagePath: "assets/box.png",
+      imagePath: "assets/menu-app.png",
       navigateTo: const Kategori(),
+    ),
+    MenuItemData(
+      title: "Manajemen Stok",
+      imagePath: "assets/delivery-box.png",
+      navigateTo:  StockManagementPage(),
     ),
   ];
 
@@ -183,7 +190,8 @@ class MenuItemData {
   final String title;
   final String imagePath;
   final Widget navigateTo;
-  MenuItemData({required this.title, required this.imagePath, required this.navigateTo});
+  MenuItemData(
+      {required this.title, required this.imagePath, required this.navigateTo});
 }
 
 class CustomMenuWidget extends StatelessWidget {
