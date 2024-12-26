@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
+import 'package:pemrogramanbergerak/pages/product/tambah-product.dart';
 import 'package:pemrogramanbergerak/pages/product/widget/item_product.dart';
 // import 'package:praktikum_list_view/pages/product/item_product.dart';
 
@@ -11,7 +12,6 @@ class MenuProduct extends StatefulWidget {
 }
 
 class _MenuProductState extends State<MenuProduct> {
-  
   List products = [];
 
   @override
@@ -170,7 +170,7 @@ class _MenuProductState extends State<MenuProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Produk",
           style: TextStyle(
             fontSize: 24,
@@ -186,7 +186,8 @@ class _MenuProductState extends State<MenuProduct> {
           itemCount: products.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
@@ -203,7 +204,12 @@ class _MenuProductState extends State<MenuProduct> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ElevatedButton(
-          onPressed: () {}, 
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TambahBarangScreen()),
+            );
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.green,
             padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -212,9 +218,10 @@ class _MenuProductState extends State<MenuProduct> {
             ),
             textStyle: const TextStyle(fontSize: 18),
           ),
-          child: Text("Add Product",
-          style: TextStyle(
-            color: Colors.white,
+          child: const Text(
+            "Add Product",
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
         ),

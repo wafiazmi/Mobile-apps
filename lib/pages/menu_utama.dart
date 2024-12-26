@@ -19,7 +19,7 @@ class _MenuUtamaState extends State<MenuUtama> {
   final List<DrawerItem> _drawerItems = [
     DrawerItem(
       title: "Home",
-      navigateTo: const SamplePage(),
+      navigateTo: MenuUtama(),
     ),
     DrawerItem(
       title: "Management",
@@ -72,7 +72,12 @@ class _MenuUtamaState extends State<MenuUtama> {
     MenuItemData(
       title: "Manajemen Stok",
       imagePath: "assets/delivery-box.png",
-      navigateTo:  StockManagementPage(),
+      navigateTo: StockManagementPage(),
+    ),
+    MenuItemData(
+        title: "Pembelian barang",
+        imagePath: "assets/keranjang.png",
+        navigateTo: SamplePage(),
     ),
   ];
 

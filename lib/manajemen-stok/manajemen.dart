@@ -62,79 +62,98 @@ class StockManagementPage extends StatelessWidget {
                   ),
                   isThreeLine: true,
                   onTap: () {
-                    showModalBottomSheet(
+                    showDialog(
                       context: context,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        ),
-                      ),
                       builder: (BuildContext context) {
-                        return Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                "AKSI",
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                              SizedBox(height: 16),
-                              ListTile(
-                                leading: CircleAvatar(
-                                  child: Icon(Icons.mouse, color: Colors.white),
-                                  backgroundColor: Colors.green,
-                                ),
-                                title: Text("mouse"),
-                                subtitle: Text("M6152339MX04027"),
-                                trailing: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "Rp 150.000",
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          title: Container(
+                            constraints: BoxConstraints(
+                              maxHeight: MediaQuery.of(context).size.height * 0.8,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0, horizontal: 16.0),
+                                  child: Text(
+                                    "AKSI",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
                                     ),
-                                    Text("8"),
-                                  ],
-                                ),
-                              ),
-                              Divider(),
-                              ListTile(
-                                title: Text("Tambah / kurang stok"),
-                                trailing: Icon(Icons.chevron_right),
-                                onTap: () {
-                                  // Tambah stok action
-                                },
-                              ),
-                              ListTile(
-                                title: Text("Edit / lihat stok"),
-                                trailing: Icon(Icons.chevron_right),
-                                onTap: () {
-                                  // Edit stok action
-                                },
-                              ),
-                              ListTile(
-                                title: Text("Log Barang"),
-                                trailing: Icon(Icons.chevron_right),
-                                onTap: () {
-                                  // Log barang action
-                                },
-                              ),
-                              SizedBox(height: 16),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                                child: Text("OK"),
-                              ),
-                            ],
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        ListTile(
+                                          leading: CircleAvatar(
+                                            radius: 24,
+                                            backgroundColor: Colors.green,
+                                            child: Icon(Icons.mouse, color: Colors.white),
+                                          ),
+                                          title: Text("mouse"),
+                                          subtitle: Text("M6152339MX04027"),
+                                          trailing: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                "Rp 150.000",
+                                                style: TextStyle(fontWeight: FontWeight.bold),
+                                              ),
+                                              Text("8"),
+                                            ],
+                                          ),
+                                        ),
+                                        Divider(),
+                                        ListTile(
+                                          title: Text("Tambah / kurang stok"),
+                                          trailing: Icon(Icons.chevron_right),
+                                          onTap: () {
+                                            // Tambah stok action
+                                          },
+                                        ),
+                                        ListTile(
+                                          title: Text("Edit / lihat stok"),
+                                          trailing: Icon(Icons.chevron_right),
+                                          onTap: () {
+                                            // Edit stok action
+                                          },
+                                        ),
+                                        ListTile(
+                                          title: Text("Log Barang"),
+                                          trailing: Icon(Icons.chevron_right),
+                                          onTap: () {
+                                            // Log barang action
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      minimumSize: Size(double.infinity, 48),
+                                    ),
+                                    child: Text("OK", style: TextStyle(color: Colors.white)),                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },

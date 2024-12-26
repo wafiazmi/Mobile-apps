@@ -111,7 +111,31 @@ class Kategori extends StatelessWidget {
                     trailing: IconButton(
                       icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () {
-                        // Aksi hapus kategori
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Konfirmasi'),
+                              content: const Text(
+                                  'Apakah Anda yakin ingin menghapus kategori ini?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('BATAL'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    // Aksi hapus kategori
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('HAPUS'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                     ),
                   ),
