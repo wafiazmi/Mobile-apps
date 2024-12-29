@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pemrogramanbergerak/kategori-barang/kategori_barang.dart';
-import 'package:pemrogramanbergerak/manajemen-stok/pop-up.dart';
 import 'package:pemrogramanbergerak/pages/login/login_page.dart';
 import 'package:pemrogramanbergerak/pages/profile/foto.dart';
 import 'package:pemrogramanbergerak/pages/menu_utama.dart';
