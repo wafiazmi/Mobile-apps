@@ -30,6 +30,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 3000,
         kode_barang: "KSR00001",
         stok: 15,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Taro Snack",
@@ -37,6 +39,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 4000,
         kode_barang: "KSR00002",
         stok: 8,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Good Time Choco Chip",
@@ -44,6 +48,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 6500,
         kode_barang: "KSR00003",
         stok: 12,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Indomie Goreng",
@@ -51,6 +57,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 3000,
         kode_barang: "KSR00004",
         stok: 20,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Nutella Spread",
@@ -58,6 +66,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 35000,
         kode_barang: "KSR00005",
         stok: 3,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Aqua 600ml",
@@ -65,6 +75,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 4000,
         kode_barang: "KSR00006",
         stok: 50,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Pringles Original",
@@ -72,6 +84,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 25000,
         kode_barang: "KSR00007",
         stok: 6,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Oreo Wafer Roll",
@@ -79,6 +93,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 9000,
         kode_barang: "KSR00008",
         stok: 10,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Yakult",
@@ -86,6 +102,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 10000,
         kode_barang: "KSR00009",
         stok: 7,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Pocky Strawberry",
@@ -93,6 +111,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 8000,
         kode_barang: "KSR00010",
         stok: 15,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Chitato Rasa Sapi Panggang",
@@ -100,6 +120,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 7500,
         kode_barang: "KSR00011",
         stok: 18,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Coca Cola 1L",
@@ -107,6 +129,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 10000,
         kode_barang: "KSR00012",
         stok: 25,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "SilverQueen Cashew",
@@ -114,6 +138,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 15000,
         kode_barang: "KSR00013",
         stok: 10,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Lays Classic",
@@ -121,6 +147,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 13000,
         kode_barang: "KSR00014",
         stok: 4,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Teh Kotak Jasmine",
@@ -128,6 +156,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 6000,
         kode_barang: "KSR00015",
         stok: 30,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Fanta Grape",
@@ -135,6 +165,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 9000,
         kode_barang: "KSR00016",
         stok: 22,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Pepsi Blue",
@@ -142,6 +174,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 9500,
         kode_barang: "KSR00017",
         stok: 17,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Milo Kotak",
@@ -149,6 +183,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 7000,
         kode_barang: "KSR00018",
         stok: 40,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Kacang Garuda",
@@ -156,6 +192,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 5000,
         kode_barang: "KSR00019",
         stok: 35,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
       Product(
         nama: "Torabika Cappuccino",
@@ -163,6 +201,8 @@ class _MenuProductState extends State<MenuProduct> {
         harga_jual: 3500,
         kode_barang: "KSR00020",
         stok: 60,
+        uri_gambar: "",
+        id_kategori: 1,
       ),
     ];
   }

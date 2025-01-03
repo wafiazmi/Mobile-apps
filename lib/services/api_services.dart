@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:pemrogramanbergerak/model/user_model.dart';
+import 'package:pemrogramanbergerak/pages/pengguna/models/user_model.dart';
 // import 'package:kasir_pintar_2/model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

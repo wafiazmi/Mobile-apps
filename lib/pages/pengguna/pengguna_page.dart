@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pemrogramanbergerak/model/user_model.dart';
+import 'package:pemrogramanbergerak/pages/pengguna/models/user_model.dart';
 import 'package:pemrogramanbergerak/services/api_services.dart';
 // import 'package:kasir_pintar_2/model/user_model.dart';
 // import 'package:kasir_pintar_2/services/api_services.dart';

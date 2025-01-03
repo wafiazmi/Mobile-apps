@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
+import 'package:pemrogramanbergerak/services/product_service.dart';
 import 'package:pemrogramanbergerak/pages/profile/foto.dart';
 
 class TambahBarangScreen extends StatefulWidget {
@@ -207,7 +209,18 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // Aksi tombol simpan
+                final product = Product(
+                  id_product: null,
+                  nama: "Contoh Barang",
+                  kode_barang: "123456",
+                  stok: 10,
+                  harga_beli: 10000,
+                  harga_jual: 15000,
+                  uri_gambar: "https://example.com/image.jpg", // Sesuaikan
+                  id_kategori: 1,
+                );
+                
+                createProduct(product);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -220,4 +233,7 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
       ),
     );
   }
+}
+
+void createProduct(Product product) {
 }
