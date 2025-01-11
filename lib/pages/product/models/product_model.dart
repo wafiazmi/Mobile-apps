@@ -6,20 +6,19 @@ class Product {
   int? harga_beli;
   int? harga_jual;
   String? uri_gambar;
-  String? harga_satuan;
   int? id_kategori;
 
   Product({
     this.id_product,
-    this.nama = 'Barang 1',
-    this.kode_barang = '0000001',
-    this.stok = 10,
-    this.harga_beli = 10000,
-    this.harga_jual = 5000,
-    required uri_gambar,
-    required id_kategori,
+    this.nama,
+    this.kode_barang,
+    this.stok,
+    this.harga_beli,
+    this.harga_jual,
+    this.uri_gambar,
+    this.id_kategori,
   });
-  
+
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id_product: json['id_product'],
@@ -31,5 +30,18 @@ class Product {
       uri_gambar: json['uri_gambar'],
       id_kategori: json['id_kategori'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id_product": id_product,
+      "nama": nama,
+      "kode_barang": kode_barang,
+      "stok": stok,
+      "harga_beli": harga_beli,
+      "harga_jual": harga_jual,
+      "uri_gambar": uri_gambar,
+      "id_kategori": id_kategori,
+    };
   }
 }
