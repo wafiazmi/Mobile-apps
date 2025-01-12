@@ -77,7 +77,7 @@ class _MenuUtamaState extends State<MenuUtama> {
     ),
     MenuItemData(
         title: "Pembelian barang",
-        imagePath: "assets/keranjang.png",
+        imagePath: "assets/image/keranjang.png",
         navigateTo: PembelianPage(),
     ),
   ];
@@ -97,7 +97,7 @@ class _MenuUtamaState extends State<MenuUtama> {
       title: const Text(
         "Management",
         style: TextStyle(
-          color: Color(0xFF10745C),
+          color:  Colors.blueAccent,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -208,7 +208,7 @@ class CustomMenuWidget extends StatelessWidget {
   const CustomMenuWidget({
     super.key,
     this.tujuanNavigasi = const SamplePage(),
-    this.pathImages = "assets/box.png",
+    this.pathImages = "assets/image/box.png",
     required this.textMenu,
   });
 

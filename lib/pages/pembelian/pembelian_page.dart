@@ -28,7 +28,9 @@ class _PembelianPageState extends State<PembelianPage> {
         backgroundColor: Colors.green,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: Text(
           "Pembelian",
