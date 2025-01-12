@@ -5,6 +5,7 @@ import "package:pemrogramanbergerak/kategori-barang/kategori_barang.dart";
 import "package:pemrogramanbergerak/manajemen-stok/manajemen.dart";
 import "package:pemrogramanbergerak/pages/product/menu_product.dart";
 import "package:pemrogramanbergerak/pages/report/main.dart";
+import "package:pemrogramanbergerak/pages/pembelian/pembelian_page.dart";
 import "sample.dart";
 import "header_drawer.dart";
 
@@ -77,7 +78,7 @@ class _MenuUtamaState extends State<MenuUtama> {
     MenuItemData(
         title: "Pembelian barang",
         imagePath: "assets/keranjang.png",
-        navigateTo: SamplePage(),
+        navigateTo: PembelianPage(),
     ),
   ];
 
