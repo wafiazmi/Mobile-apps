@@ -1,3 +1,4 @@
+// lib\pages\product\models\product_model.dart
 class Product {
   int? id;
   String? kode;

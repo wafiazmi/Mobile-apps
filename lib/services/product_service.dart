@@ -1,3 +1,4 @@
+//lib\services\product_service.dart
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -106,23 +107,31 @@ class ProductService {
     }
   }
 
-  Future<bool> updateProduct(Product product) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    Future<bool> updateProduct(Product product) async {
+    try {
+      final token = await _getToken();
+      final response = await http.put(
+        Uri.parse('$baseUrl/${product.id}'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(product.toJson()),
+      ).timeout(Duration(seconds: 10));
 
-    final response = await http.put(
-      Uri.parse('$baseUrl/produk/${product.id}'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode(product.toJson()),
-    );
-
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      throw Exception('Failed to update product');
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('Failed to update product. Status code: ${response.statusCode}, Response: ${response.body}');
+      }
+    } on TimeoutException catch (e) {
+      throw Exception('Request timeout: $e');
+    } on http.ClientException catch (e) {
+      throw Exception('Network error: $e');
+    } on FormatException catch (e) {
+      throw Exception('Invalid JSON format: $e');
+    } catch (e) {
+      throw Exception('Unexpected error: $e');
     }
   }
 }

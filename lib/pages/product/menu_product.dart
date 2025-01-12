@@ -38,6 +38,15 @@ class _MenuProductState extends State<MenuProduct> {
     }
   }
 
+  void _updateProduct(Product updatedProduct) {
+    setState(() {
+      final index = products.indexWhere((p) => p.id == updatedProduct.id);
+      if (index != -1) {
+        products[index] = updatedProduct; // Perbarui produk di list
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +80,7 @@ class _MenuProductState extends State<MenuProduct> {
                           elevation: 4,
                           child: ItemProduct(
                             barang: products[index],
+                            onProductUpdated: _updateProduct, // Kirim callback ke ItemProduct
                           ),
                         ),
                       );

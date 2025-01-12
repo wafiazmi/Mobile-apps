@@ -1,11 +1,17 @@
+// lib\pages\product\edit_produk.dart
 import 'package:flutter/material.dart';
 import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
 import 'package:pemrogramanbergerak/services/product_service.dart'; // Import ProductService
 
 class EditProductScreen extends StatefulWidget {
   final Product product;
+  final Function(Product)? onProductUpdated; // Callback untuk mengirim data yang diperbarui
 
-  const EditProductScreen({Key? key, required this.product}) : super(key: key);
+  const EditProductScreen({
+    Key? key,
+    required this.product,
+    this.onProductUpdated, // Tambahkan parameter callback
+  }) : super(key: key);
 
   @override
   _EditProductScreenState createState() => _EditProductScreenState();
@@ -178,7 +184,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     );
   }
 
-  void _saveProduct() async {
+void _saveProduct() async {
   if (_formKey.currentState!.validate()) {
     final updatedProduct = Product(
       id: widget.product.id,
@@ -186,7 +192,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
       namaProduk: _namaProdukController.text,
       harga: double.tryParse(_hargaController.text),
       stok: int.tryParse(_stokController.text),
-      gambar: widget.product.gambar,
       kategori: Kategori(
         id: widget.product.kategori?.id,
         namaKategori: _kategoriController.text,
@@ -197,7 +202,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
       final success = await _productService.updateProduct(updatedProduct);
 
       if (success) {
-        Navigator.pop(context, updatedProduct);
+        // Panggil callback jika ada
+        if (widget.onProductUpdated != null) {
+          widget.onProductUpdated!(updatedProduct);
+        }
+        Navigator.pop(context, updatedProduct); // Kembali ke halaman sebelumnya
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Gagal mengupdate produk')),
