@@ -14,6 +14,27 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
   bool tampilkanDiTransaksi = true;
   bool pakaiStok = true;
 
+  // Controller untuk input fields
+  final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _kodeController = TextEditingController();
+  final TextEditingController _stokController = TextEditingController();
+  final TextEditingController _hargaController = TextEditingController();
+  final TextEditingController _gambarController = TextEditingController();
+
+  // State untuk kategori
+  Kategori? _selectedKategori;
+
+  @override
+  void dispose() {
+    // Hapus controller saat widget di-dispose
+    _namaController.dispose();
+    _kodeController.dispose();
+    _stokController.dispose();
+    _hargaController.dispose();
+    _gambarController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,10 +93,17 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
             ),
             const SizedBox(height: 16),
             TextFormField(
+              controller: _namaController,
               decoration: const InputDecoration(
                 labelText: 'Nama*',
                 border: OutlineInputBorder(),
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Nama produk tidak boleh kosong';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(
@@ -123,10 +151,18 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
               children: [
                 Expanded(
                   child: TextFormField(
+                    controller: _stokController,
                     decoration: const InputDecoration(
                       labelText: 'Stok*',
                       border: OutlineInputBorder(),
                     ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Stok tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -135,10 +171,17 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
                     alignment: Alignment.centerRight,
                     children: [
                       TextFormField(
+                        controller: _kodeController,
                         decoration: const InputDecoration(
                           labelText: 'Kode Barang*',
                           border: OutlineInputBorder(),
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Kode barang tidak boleh kosong';
+                          }
+                          return null;
+                        },
                       ),
                       Positioned(
                         right: 4,
@@ -159,11 +202,19 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
               children: [
                 Expanded(
                   child: TextFormField(
+                    controller: _hargaController,
                     decoration: const InputDecoration(
                       labelText: 'Harga Dasar*',
                       border: OutlineInputBorder(),
                       prefixText: 'Rp ',
                     ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Harga dasar tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -174,21 +225,43 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
                       border: OutlineInputBorder(),
                       prefixText: 'Rp ',
                     ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Harga jual tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
+            DropdownButtonFormField<Kategori>(
               decoration: const InputDecoration(
                 labelText: 'Kategori',
                 border: OutlineInputBorder(),
               ),
-              items: const [
-                DropdownMenuItem(child: Text('Pilih Kategori'), value: null),
+              value: _selectedKategori,
+              items: [
+                DropdownMenuItem(
+                  value: null,
+                  child: Text('Pilih Kategori'),
+                ),
+                // Contoh daftar kategori (bisa diganti dengan data dari API)
+                DropdownMenuItem(
+                  value: Kategori(id: 1, namaKategori: 'Makanan'),
+                  child: Text('Makanan'),
+                ),
+                DropdownMenuItem(
+                  value: Kategori(id: 2, namaKategori: 'Minuman'),
+                  child: Text('Minuman'),
+                ),
               ],
-              onChanged: (value) {
-                // Aksi saat kategori dipilih
+              onChanged: (Kategori? value) {
+                setState(() {
+                  _selectedKategori = value;
+                });
               },
             ),
             const SizedBox(height: 16),
@@ -209,29 +282,38 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                final kategori = Kategori(
-                  id: 1,
-                  namaKategori: "Default"
-                );
-                
+                // Validasi input
+                if (_namaController.text.isEmpty ||
+                    _kodeController.text.isEmpty ||
+                    _stokController.text.isEmpty ||
+                    _hargaController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Harap isi semua field yang wajib diisi')),
+                  );
+                  return;
+                }
+
+                // Buat objek Product
                 final product = Product(
-
-
-
-                  id: null,
-                  kode: "123456",
-                  namaProduk: "Contoh Barang",
-                  harga: 15000.00,
-                  stok: 10,
-
-
-
-
-                  gambar: "https://example.com/image.jpg",
-                  kategori: kategori,
+                  id: null, // ID akan di-generate oleh backend
+                  kode: _kodeController.text,
+                  namaProduk: _namaController.text,
+                  harga: double.tryParse(_hargaController.text),
+                  stok: int.tryParse(_stokController.text),
+                  gambar: _gambarController.text,
+                  kategori: _selectedKategori,
                 );
-                
+
+                // Panggil fungsi untuk menyimpan produk
                 createProduct(product);
+
+                // Tampilkan pesan sukses
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Produk berhasil disimpan')),
+                );
+
+                // Kembali ke halaman sebelumnya
+                Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -246,5 +328,11 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
   }
 }
 
-void createProduct(Product product) {
+void createProduct(Product product) async {
+  final productService = ProductService();
+  try {
+    await productService.createProduct(product);
+  } catch (e) {
+    print('Gagal menyimpan produk: $e');
+  }
 }
