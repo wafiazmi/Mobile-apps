@@ -32,7 +32,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 image: DecorationImage(
-                  image: AssetImage('assets/user.png'),
+                  image: AssetImage('assets/image/user.png'),
                   fit: BoxFit.cover,
                 ),
               ),

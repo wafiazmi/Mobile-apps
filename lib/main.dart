@@ -6,6 +6,8 @@ import 'package:pemrogramanbergerak/pages/menu_utama.dart';
 import 'package:pemrogramanbergerak/pages/profile/edit_profile.dart';
 import 'package:pemrogramanbergerak/pages/profile/profile.dart';
 import 'package:pemrogramanbergerak/pages/product/widget/item_product.dart';
+import 'package:pemrogramanbergerak/pages/login/register.dart';
+
 
 void main() {
   runApp(const MyApp());

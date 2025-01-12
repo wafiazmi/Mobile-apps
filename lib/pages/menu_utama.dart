@@ -61,22 +61,22 @@ class _MenuUtamaState extends State<MenuUtama> {
   final List<MenuItemData> _menuItems = [
     MenuItemData(
       title: "Products and Services",
-      imagePath: "assets/suplier.png",
+      imagePath: "assets/image/suplier.png",
       navigateTo: const MenuProduct(),
     ),
     MenuItemData(
       title: "Product Category",
-      imagePath: "assets/menu-app.png",
+      imagePath: "assets/image/menu-app.png",
       navigateTo: const Kategori(),
     ),
     MenuItemData(
       title: "Manajemen Stok",
-      imagePath: "assets/delivery-box.png",
+      imagePath: "assets/image/delivery-box.png",
       navigateTo: StockManagementPage(),
     ),
     MenuItemData(
         title: "Pembelian barang",
-        imagePath: "assets/keranjang.png",
+        imagePath: "assets/image/keranjang.png",
         navigateTo: SamplePage(),
     ),
   ];

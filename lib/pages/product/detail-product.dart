@@ -1,80 +1,182 @@
 import 'package:flutter/material.dart';
+import 'package:pemrogramanbergerak/pages/product/edit_produk.dart';
 import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
 
 class ProductDetail extends StatelessWidget {
-  final Product barang;
+  final Product product;
 
-  const ProductDetail({Key? key, required this.barang, required productId}) : super(key: key);
+  const ProductDetail({Key? key, required this.product, required Product barang, int? productId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(barang.namaProduk ?? "Nama tidak tersedia"),
-        backgroundColor: Colors.green,
+        title: Text('Detail Produk'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditProductScreen(product: product),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              // Logika untuk menghapus produk
+            },
+          ),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              barang.namaProduk ?? "Nama tidak tersedia",
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            // Gambar Produk
+            if (product.gambar != null && product.gambar!.isNotEmpty)
+              Center(
+                child: Image.network(
+                  product.gambar!,
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(Icons.image, size: 150); // Placeholder jika gambar tidak valid
+                  },
+                ),
+              )
+            else
+              Center(
+                child: Icon(Icons.image, size: 150), // Placeholder jika gambar kosong
               ),
-            ),
-            const SizedBox(height: 16),
+
+            SizedBox(height: 20),
+
+            // Nama Produk
             Text(
-              "Harga: Rp ${barang.harga?.toStringAsFixed(2)}",
-              style: const TextStyle(fontSize: 18),
+              product.namaProduk ?? 'Nama Produk',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
+
+            SizedBox(height: 10),
+
+            // Harga Jual
             Text(
-              "Kode: ${barang.kode}",
-              style: const TextStyle(fontSize: 18),
+              'Harga Jual: Rp ${product.harga?.toStringAsFixed(2) ?? '0.00'}',
+              style: TextStyle(fontSize: 18),
             ),
+
+            SizedBox(height: 10),
+
+            // Diskon
             Text(
-              "Stok: ${barang.stok}",
-              style: const TextStyle(fontSize: 18),
-            ),
-            if (barang.gambar != null) ...[
-              const SizedBox(height: 16),
-              Image.network(barang.gambar!),
-            ],
-            if (barang.kategori != null) ...[
-              const SizedBox(height: 16),
-              Text(
-                "Kategori: ${barang.kategori?.namaKategori}",
-                style: const TextStyle(fontSize: 18),
-              ),
-            ],
-            const SizedBox(height: 16),
-            const Text(
-              "Keterangan:",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              "Informasi tambahan mengenai produk akan ditampilkan di sini.",
+              'Diskon: 0.0%', // Anda bisa menambahkan field diskon di model jika diperlukan
               style: TextStyle(fontSize: 16),
             ),
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Add edit functionality here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                ),
-                child: const Text(
-                  'Edit Produk',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
+
+            SizedBox(height: 10),
+
+            // Berat
+            Text(
+              'Berat: 0.0 gram', // Anda bisa menambahkan field berat di model jika diperlukan
+              style: TextStyle(fontSize: 16),
+            ),
+
+            SizedBox(height: 10),
+
+            // Kode Produk
+            Text(
+              'Kode: ${product.kode ?? '-'}',
+              style: TextStyle(fontSize: 16),
+            ),
+
+            SizedBox(height: 10),
+
+            // Stok
+            Text(
+              'Stok: ${product.stok != null ? (product.stok! >= 0 ? product.stok.toString() : 'Tidak terbatas') : '-'}',
+              style: TextStyle(fontSize: 16),
+            ),
+
+            SizedBox(height: 10),
+
+            // Stok Minimum
+            Text(
+              'Stok Minimum: 0.0', // Anda bisa menambahkan field stok minimum di model jika diperlukan
+              style: TextStyle(fontSize: 16),
+            ),
+
+            SizedBox(height: 10),
+
+            // Kategori
+            Text(
+              'Kategori: ${product.kategori?.namaKategori ?? '-'}',
+              style: TextStyle(fontSize: 16),
+            ),
+
+            SizedBox(height: 10),
+
+            // Letak Rak
+            Text(
+              'Letak Rak: -', // Anda bisa menambahkan field letak rak di model jika diperlukan
+              style: TextStyle(fontSize: 16),
+            ),
+
+            SizedBox(height: 20),
+
+            // Keterangan
+            Text(
+              'Keterangan:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Tidak ada keterangan', // Anda bisa menambahkan field keterangan di model jika diperlukan
+              style: TextStyle(fontSize: 16),
+            ),
+
+            SizedBox(height: 20),
+
+            // Tombol Lihat Barang Terhubung
+            ElevatedButton(
+              onPressed: () {
+                // Logika untuk melihat barang terhubung
+              },
+              child: Text('Lihat Barang Terhubung'),
+            ),
+
+            SizedBox(height: 10),
+
+            // Tombol Detail Sisa Stok
+            ElevatedButton(
+              onPressed: () {
+                // Logika untuk melihat detail sisa stok
+              },
+              child: Text('Detail Sisa Stok'),
+            ),
+
+            SizedBox(height: 10),
+
+            // Tombol Pelanggan
+            ElevatedButton(
+              onPressed: () {
+                // Logika untuk melihat pelanggan
+              },
+              child: Text('Pelanggan'),
+            ),
+
+            SizedBox(height: 10),
+
+            // Tombol Supplier
+            ElevatedButton(
+              onPressed: () {
+                // Logika untuk melihat supplier
+              },
+              child: Text('Supplier'),
             ),
           ],
         ),

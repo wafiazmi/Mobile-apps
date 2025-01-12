@@ -209,28 +209,18 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                final kategori = Kategori(
-                  id: 1,
-                  namaKategori: "Default"
-                );
-                
+                final kategori = Kategori(id: 1, namaKategori: "Default");
+
                 final product = Product(
-
-
-
                   id: null,
                   kode: "123456",
                   namaProduk: "Contoh Barang",
                   harga: 15000.00,
                   stok: 10,
-
-
-
-
                   gambar: "https://example.com/image.jpg",
                   kategori: kategori,
                 );
-                
+
                 createProduct(product);
               },
               style: ElevatedButton.styleFrom(
@@ -246,5 +236,4 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
   }
 }
 
-void createProduct(Product product) {
-}
+void createProduct(Product product) {}

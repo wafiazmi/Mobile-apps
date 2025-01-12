@@ -17,10 +17,9 @@ class ItemProduct extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetail(barang: barang, productId: barang.id),
+            builder: (context) => ProductDetail(product: barang, barang: barang, productId: barang.id),
           ),
-        );
-      },
+        );      },
     );
   }
 }
