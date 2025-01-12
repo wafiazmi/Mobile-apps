@@ -47,6 +47,12 @@ class _MenuProductState extends State<MenuProduct> {
     });
   }
 
+  void _deleteProduct(int productId) {
+    setState(() {
+      products.removeWhere((p) => p.id == productId); // Hapus produk dari list
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +87,7 @@ class _MenuProductState extends State<MenuProduct> {
                           child: ItemProduct(
                             barang: products[index],
                             onProductUpdated: _updateProduct, // Kirim callback ke ItemProduct
+                            onProductDeleted: _deleteProduct, // Kirim callback untuk delete
                           ),
                         ),
                       );

@@ -9,7 +9,7 @@ class ItemProduct extends StatelessWidget {
   const ItemProduct({
     Key? key,
     required this.barang,
-    this.onProductUpdated, // Tambahkan parameter callback
+    this.onProductUpdated, required void Function(int productId) onProductDeleted, // Tambahkan parameter callback
   }) : super(key: key);
 
   @override
