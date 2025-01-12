@@ -1,19 +1,17 @@
-import 'dart:async'; // Impor library ini
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
 
 class ProductService {
-  final String baseUrl = 'http://127.0.0.1:8000/api/v1/produk'; // Ganti dengan URL API Anda
+  final String baseUrl = 'http://127.0.0.1:8000/api/v1/produk';
 
-  // Method untuk mengambil token dari SharedPreferences
   Future<String?> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
 
-  // Method untuk mengambil semua produk
   Future<List<Product>> getProducts() async {
     try {
       final token = await _getToken();
@@ -22,10 +20,11 @@ class ProductService {
         headers: {
           'Authorization': 'Bearer $token',
         },
-      ).timeout(Duration(seconds: 10)); // Tambahkan timeout
+      ).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body)['data'];
+        final Map<String, dynamic> responseBody = jsonDecode(response.body);
+        final List<dynamic> data = responseBody['data'];
         return data.map((json) => Product.fromJson(json)).toList();
       } else {
         throw Exception('Failed to load products: ${response.statusCode}');
@@ -41,7 +40,6 @@ class ProductService {
     }
   }
 
-  // Method untuk mengambil detail produk berdasarkan ID
   Future<Product> getProductDetail(int id) async {
     try {
       final token = await _getToken();
@@ -50,7 +48,7 @@ class ProductService {
         headers: {
           'Authorization': 'Bearer $token',
         },
-      ).timeout(Duration(seconds: 10)); // Tambahkan timeout
+      ).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body)['data'];
@@ -69,7 +67,6 @@ class ProductService {
     }
   }
 
-  // Method untuk menambahkan produk baru
   Future<Map<String, dynamic>> createProduct(Product product) async {
     try {
       final token = await _getToken();
@@ -80,16 +77,15 @@ class ProductService {
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          "id_product": product.id_product,
-          "nama": product.nama,
-          "kode_barang": product.kode_barang,
+          "id": product.id,
+          "kode": product.kode,
+          "nama_produk": product.namaProduk,
+          "harga": product.harga?.toString(),
           "stok": product.stok,
-          "harga_beli": product.harga_beli,
-          "harga_jual": product.harga_jual,
-          "uri_gambar": product.uri_gambar,
-          "id_kategori": product.id_kategori,
+          "gambar": product.gambar,
+          "kategori": product.kategori?.toJson(),
         }),
-      ).timeout(Duration(seconds: 10)); // Tambahkan timeout
+      ).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonDecode(response.body);
@@ -107,7 +103,6 @@ class ProductService {
     }
   }
 
-  // Method untuk mengupdate produk berdasarkan ID
   Future<Map<String, dynamic>> updateProduct(int id, Map<String, dynamic> data) async {
     try {
       final token = await _getToken();
@@ -118,7 +113,7 @@ class ProductService {
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode(data),
-      ).timeout(Duration(seconds: 10)); // Tambahkan timeout
+      ).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
@@ -136,7 +131,6 @@ class ProductService {
     }
   }
 
-  // Method untuk menghapus produk berdasarkan ID
   Future<Map<String, dynamic>> deleteProduct(int id) async {
     try {
       final token = await _getToken();
@@ -145,7 +139,7 @@ class ProductService {
         headers: {
           'Authorization': 'Bearer $token',
         },
-      ).timeout(Duration(seconds: 10)); // Tambahkan timeout
+      ).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         return jsonDecode(response.body);

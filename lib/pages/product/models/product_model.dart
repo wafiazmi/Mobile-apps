@@ -1,47 +1,67 @@
 class Product {
-  int? id_product;
-  String? nama;
-  String? kode_barang;
+  int? id;
+  String? kode;
+  String? namaProduk;
+  double? harga; // Ubah ke double karena harga adalah string dalam format "9000.00"
   int? stok;
-  int? harga_beli;
-  int? harga_jual;
-  String? uri_gambar;
-  int? id_kategori;
+  String? gambar;
+  Kategori? kategori; // Ubah ke objek Kategori
 
   Product({
-    this.id_product,
-    this.nama,
-    this.kode_barang,
+    this.id,
+    this.kode,
+    this.namaProduk,
+    this.harga,
     this.stok,
-    this.harga_beli,
-    this.harga_jual,
-    this.uri_gambar,
-    this.id_kategori,
+    this.gambar,
+    this.kategori,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id_product: json['id_product'],
-      nama: json['nama'],
-      kode_barang: json['kode_barang'],
+      id: json['id'],
+      kode: json['kode'],
+      namaProduk: json['nama_produk'],
+      harga: double.tryParse(json['harga']), // Konversi string ke double
       stok: json['stok'],
-      harga_beli: json['harga_beli'],
-      harga_jual: json['harga_jual'],
-      uri_gambar: json['uri_gambar'],
-      id_kategori: json['id_kategori'],
+      gambar: json['gambar'],
+      kategori: json['kategori'] != null ? Kategori.fromJson(json['kategori']) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "id_product": id_product,
-      "nama": nama,
-      "kode_barang": kode_barang,
+      "id": id,
+      "kode": kode,
+      "nama_produk": namaProduk,
+      "harga": harga?.toString(), // Konversi double ke string
       "stok": stok,
-      "harga_beli": harga_beli,
-      "harga_jual": harga_jual,
-      "uri_gambar": uri_gambar,
-      "id_kategori": id_kategori,
+      "gambar": gambar,
+      "kategori": kategori?.toJson(),
+    };
+  }
+}
+
+class Kategori {
+  int? id;
+  String? namaKategori;
+
+  Kategori({
+    this.id,
+    this.namaKategori,
+  });
+
+  factory Kategori.fromJson(Map<String, dynamic> json) {
+    return Kategori(
+      id: json['id'],
+      namaKategori: json['nama_kategori'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "nama_kategori": namaKategori,
     };
   }
 }

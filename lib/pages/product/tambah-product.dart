@@ -209,15 +209,26 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
+                final kategori = Kategori(
+                  id: 1,
+                  namaKategori: "Default"
+                );
+                
                 final product = Product(
-                  id_product: null,
-                  nama: "Contoh Barang",
-                  kode_barang: "123456",
+
+
+
+                  id: null,
+                  kode: "123456",
+                  namaProduk: "Contoh Barang",
+                  harga: 15000.00,
                   stok: 10,
-                  harga_beli: 10000,
-                  harga_jual: 15000,
-                  uri_gambar: "https://example.com/image.jpg", // Sesuaikan
-                  id_kategori: 1,
+
+
+
+
+                  gambar: "https://example.com/image.jpg",
+                  kategori: kategori,
                 );
                 
                 createProduct(product);
