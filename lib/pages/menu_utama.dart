@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import "package:pemrogramanbergerak/pages/kategori-barang/kategori_barang.dart";
-import "package:pemrogramanbergerak/manajemen-stok/manajemen.dart";
+import "package:pemrogramanbergerak/pages/manajemen-stok/manajemen.dart";
 import "package:pemrogramanbergerak/pages/product/menu_product.dart";
 import "package:pemrogramanbergerak/pages/report/main.dart";
 import "package:pemrogramanbergerak/pages/pembelian/pembelian_page.dart";
