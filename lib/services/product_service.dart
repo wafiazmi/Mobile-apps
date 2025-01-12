@@ -70,42 +70,32 @@ class ProductService {
   }
 
   Future<Map<String, dynamic>> createProduct(Product product) async {
-    try {
-      final token = await _getToken();
-      final response = await http
-          .post(
-            Uri.parse(baseUrl),
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer $token',
-            },
-            body: jsonEncode({
-              "id": product.id,
-              "kode": product.kode,
-              "nama_produk": product.namaProduk,
-              "harga": product.harga?.toString(),
-              "stok": product.stok,
-              "gambar": product.gambar,
-              "kategori": product.kategori?.toJson(),
-            }),
-          )
-          .timeout(Duration(seconds: 10));
+  try {
+    final token = await _getToken();
+    final response = await http.post(
+      Uri.parse(baseUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        "kode": product.kode,
+        "nama_produk": product.namaProduk,
+        "harga": product.harga?.toString(),
+        "stok": product.stok,
+        "kategori": product.kategori, // Pastikan backend menerima ID kategori
+      }),
+    );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return jsonDecode(response.body);
-      } else {
-        throw Exception('Failed to create product: ${response.body}');
-      }
-    } on TimeoutException catch (e) {
-      throw Exception('Request timeout: $e');
-    } on http.ClientException catch (e) {
-      throw Exception('Network error: $e');
-    } on FormatException catch (e) {
-      throw Exception('Invalid JSON format: $e');
-    } catch (e) {
-      throw Exception('Unexpected error: $e');
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to create product: ${response.body}');
     }
+  } catch (e) {
+    throw Exception('Error: $e');
   }
+}
 
     Future<bool> updateProduct(Product product) async {
     try {

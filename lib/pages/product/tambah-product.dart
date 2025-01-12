@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
 import 'package:pemrogramanbergerak/services/product_service.dart';
-import 'package:pemrogramanbergerak/pages/profile/foto.dart';
+import 'package:pemrogramanbergerak/services/kategori_service.dart'; // Import KategoriService
+import 'package:pemrogramanbergerak/pages/kategori-barang/models/kategori_model.dart'; // Import KategoriModel
 
 class TambahBarangScreen extends StatefulWidget {
   const TambahBarangScreen({Key? key}) : super(key: key);
@@ -11,28 +12,44 @@ class TambahBarangScreen extends StatefulWidget {
 }
 
 class _TambahBarangScreenState extends State<TambahBarangScreen> {
-  bool tampilkanDiTransaksi = true;
-  bool pakaiStok = true;
-
-  // Controller untuk input fields
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _kodeController = TextEditingController();
   final TextEditingController _stokController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
-  final TextEditingController _gambarController = TextEditingController();
+  int? _selectedKategori; // Menyimpan ID kategori yang dipilih
+  List<KategoriModel> _kategoriList = []; // Menyimpan daftar kategori dari API
+  final KategoriService _kategoriService = KategoriService(); // Instance KategoriService
 
-  // State untuk kategori
-  Kategori? _selectedKategori;
+  @override
+  void initState() {
+    super.initState();
+    _loadKategori(); // Memuat data kategori saat screen di-load
+  }
 
   @override
   void dispose() {
-    // Hapus controller saat widget di-dispose
     _namaController.dispose();
     _kodeController.dispose();
     _stokController.dispose();
     _hargaController.dispose();
-    _gambarController.dispose();
     super.dispose();
+  }
+
+  // Fungsi untuk memuat data kategori dari API
+  Future<void> _loadKategori() async {
+    try {
+      final kategoriList = await _kategoriService.getKategori();
+      setState(() {
+        _kategoriList = kategoriList;
+        if (_kategoriList.isNotEmpty) {
+          _selectedKategori = _kategoriList.first.id; // Set kategori pertama sebagai default
+        }
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal memuat kategori: $e')),
+      );
+    }
   }
 
   @override
@@ -46,286 +63,101 @@ class _TambahBarangScreenState extends State<TambahBarangScreen> {
             Navigator.pop(context);
           },
         ),
-        actions: [
-          TextButton.icon(
-            onPressed: () {
-              // Aksi tombol "Instant"
-            },
-            icon: const Icon(Icons.add_circle, color: Colors.orange),
-            label: const Text(
-              '+ Instan',
-              style: TextStyle(color: Colors.orange),
-            ),
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.image, color: Colors.green),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (Builder) => const Foto()));
-                  },
-                ),
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(Icons.image, size: 50, color: Colors.grey),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.camera_alt, color: Colors.green),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (Builder) => const Foto()));
-                  },
-                ),
-              ],
+            TextFormField(
+              controller: _kodeController,
+              decoration: const InputDecoration(
+                labelText: 'Kode*',
+                border: OutlineInputBorder(),
+              ),
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _namaController,
               decoration: const InputDecoration(
-                labelText: 'Nama*',
+                labelText: 'Nama Produk*',
                 border: OutlineInputBorder(),
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Nama produk tidak boleh kosong';
-                }
-                return null;
-              },
             ),
             const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
+            TextFormField(
+              controller: _hargaController,
               decoration: const InputDecoration(
-                labelText: 'Tipe Barang',
+                labelText: 'Harga*',
+                border: OutlineInputBorder(),
+                prefixText: 'Rp ',
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _stokController,
+              decoration: const InputDecoration(
+                labelText: 'Stok*',
                 border: OutlineInputBorder(),
               ),
-              value: 'Default',
-              items: const [
-                DropdownMenuItem(child: Text('Default'), value: 'Default'),
-              ],
-              onChanged: (value) {
-                // Aksi saat tipe barang dipilih
-              },
+              keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 16),
-            Row(
-              children: [
-                Checkbox(
-                  value: tampilkanDiTransaksi,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      tampilkanDiTransaksi = value ?? false;
-                    });
-                  },
-                ),
-                const Text('Tampilkan di Transaksi'),
-              ],
-            ),
-            Row(
-              children: [
-                Checkbox(
-                  value: pakaiStok,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      pakaiStok = value ?? false;
-                    });
-                  },
-                ),
-                const Text('Pakai Stok'),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _stokController,
-                    decoration: const InputDecoration(
-                      labelText: 'Stok*',
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Stok tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Stack(
-                    alignment: Alignment.centerRight,
-                    children: [
-                      TextFormField(
-                        controller: _kodeController,
-                        decoration: const InputDecoration(
-                          labelText: 'Kode Barang*',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Kode barang tidak boleh kosong';
-                          }
-                          return null;
-                        },
-                      ),
-                      Positioned(
-                        right: 4,
-                        child: IconButton(
-                          icon: const Icon(Icons.sync, color: Colors.green),
-                          onPressed: () {
-                            // Aksi tombol sync
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _hargaController,
-                    decoration: const InputDecoration(
-                      labelText: 'Harga Dasar*',
-                      border: OutlineInputBorder(),
-                      prefixText: 'Rp ',
-                    ),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Harga dasar tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Harga Jual*',
-                      border: OutlineInputBorder(),
-                      prefixText: 'Rp ',
-                    ),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Harga jual tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<Kategori>(
+            DropdownButtonFormField<int>(
               decoration: const InputDecoration(
                 labelText: 'Kategori',
                 border: OutlineInputBorder(),
               ),
               value: _selectedKategori,
-              items: [
-                DropdownMenuItem(
-                  value: null,
-                  child: Text('Pilih Kategori'),
-                ),
-                // Contoh daftar kategori (bisa diganti dengan data dari API)
-                DropdownMenuItem(
-                  value: Kategori(id: 1, namaKategori: 'Makanan'),
-                  child: Text('Makanan'),
-                ),
-                DropdownMenuItem(
-                  value: Kategori(id: 2, namaKategori: 'Minuman'),
-                  child: Text('Minuman'),
-                ),
-              ],
-              onChanged: (Kategori? value) {
+              items: _kategoriList.map((kategori) {
+                return DropdownMenuItem<int>(
+                  value: kategori.id,
+                  child: Text(kategori.namaKategori ?? ''),
+                );
+              }).toList(),
+              onChanged: (int? value) {
                 setState(() {
                   _selectedKategori = value;
                 });
               },
             ),
             const SizedBox(height: 16),
-            Center(
-              child: InkWell(
-                onTap: () {
-                  // Aksi tampilkan lebih banyak
-                },
-                child: const Text(
-                  'Tampilkan Lebih Banyak',
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                final kategori = Kategori(
-                  id: 1,
-                  namaKategori: "Default"
-                );
-                
-                final product = Product(
+            onPressed: () async {
+              final product = {
+                "kode": _kodeController.text,
+                "nama_produk": _namaController.text,
+                "harga": _hargaController.text,
+                "stok": int.parse(_stokController.text),
+                "kategori": {
+                  "id": _selectedKategori, // Kirim ID kategori
+                  "nama_kategori": _kategoriList
+                      .firstWhere((kategori) => kategori.id == _selectedKategori)
+                      .namaKategori, // Kirim nama kategori
+                },
+              };
 
-
-
-                  id: null,
-                  kode: "123456",
-                  namaProduk: "Contoh Barang",
-                  harga: 15000.00,
-                  stok: 10,
-
-
-
-
-                  gambar: "https://example.com/image.jpg",
-                  kategori: kategori,
-                );
-                
-                createProduct(product);
-
-                // Tampilkan pesan sukses
+              try {
+                await ProductService().createProduct(Product.fromJson(product));
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Produk berhasil disimpan')),
+                  const SnackBar(content: Text('Produk berhasil disimpan')),
                 );
-
-                // Kembali ke halaman sebelumnya
                 Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                minimumSize: const Size(double.infinity, 50),
-              ),
-              child: const Text('Simpan'),
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Gagal menyimpan produk: $e')),
+                );
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              minimumSize: const Size(double.infinity, 50),
             ),
+            child: const Text('Simpan'),
+          ),
           ],
         ),
       ),
     );
   }
-}
-
-void createProduct(Product product) {
 }
