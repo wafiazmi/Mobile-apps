@@ -77,13 +77,8 @@ class _MenuUtamaState extends State<MenuUtama> {
     ),
     MenuItemData(
         title: "Pembelian barang",
-<<<<<<< HEAD
         imagePath: "assets/keranjang.png",
         navigateTo: PembelianPage(),
-=======
-        imagePath: "assets/image/keranjang.png",
-        navigateTo: SamplePage(),
->>>>>>> 48e5da6587bc422e4961b67d9fae42c5a9606115
     ),
   ];
 
