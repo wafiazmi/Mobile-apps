@@ -1,80 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:pemrogramanbergerak/pages/product/edit_produk.dart';
 import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
 
 class ProductDetail extends StatelessWidget {
+  final Product product;
   final Product barang;
+  final int? productId;
+  final Function(Product)? onProductUpdated; // Callback untuk memperbarui produk
 
-  const ProductDetail({Key? key, required this.barang, required productId}) : super(key: key);
+  const ProductDetail({
+    Key? key,
+    required this.product,
+    required this.barang,
+    this.productId,
+    this.onProductUpdated, // Tambahkan parameter callback
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(barang.namaProduk ?? "Nama tidak tersedia"),
-        backgroundColor: Colors.green,
+        title: Text(product.namaProduk ?? "Detail Produk"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              barang.namaProduk ?? "Nama tidak tersedia",
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              "Harga: Rp ${barang.harga?.toStringAsFixed(2)}",
-              style: const TextStyle(fontSize: 18),
-            ),
-            Text(
-              "Kode: ${barang.kode}",
-              style: const TextStyle(fontSize: 18),
-            ),
-            Text(
-              "Stok: ${barang.stok}",
-              style: const TextStyle(fontSize: 18),
-            ),
-            if (barang.gambar != null) ...[
-              const SizedBox(height: 16),
-              Image.network(barang.gambar!),
-            ],
-            if (barang.kategori != null) ...[
-              const SizedBox(height: 16),
-              Text(
-                "Kategori: ${barang.kategori?.namaKategori}",
-                style: const TextStyle(fontSize: 18),
-              ),
-            ],
-            const SizedBox(height: 16),
-            const Text(
-              "Keterangan:",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              "Informasi tambahan mengenai produk akan ditampilkan di sini.",
-              style: TextStyle(fontSize: 16),
-            ),
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Add edit functionality here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                ),
-                child: const Text(
-                  'Edit Produk',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
+            Text("Nama Produk: ${product.namaProduk ?? "N/A"}"),
+            Text("Stok: ${product.stok ?? 0}"),
+            Text("Harga: Rp ${product.harga ?? 0}"),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                // Navigasi ke halaman edit produk
+                final updatedProduct = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProductScreen(
+                      product: product,
+                      onProductUpdated: onProductUpdated, // Kirim callback ke EditProductScreen
+                    ),
+                  ),
+                );
+
+                // Jika ada produk yang diperbarui, panggil callback
+                if (updatedProduct != null && onProductUpdated != null) {
+                  onProductUpdated!(updatedProduct);
+                }
+              },
+              child: Text("Edit Produk"),
             ),
           ],
         ),

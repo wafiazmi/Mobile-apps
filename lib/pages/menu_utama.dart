@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import "package:pemrogramanbergerak/kategori-barang/kategori_barang.dart";
+import "package:pemrogramanbergerak/pages/kategori-barang/kategori_barang.dart";
 import "package:pemrogramanbergerak/manajemen-stok/manajemen.dart";
 import "package:pemrogramanbergerak/pages/product/menu_product.dart";
 import "package:pemrogramanbergerak/pages/report/main.dart";
@@ -62,23 +62,28 @@ class _MenuUtamaState extends State<MenuUtama> {
   final List<MenuItemData> _menuItems = [
     MenuItemData(
       title: "Products and Services",
-      imagePath: "assets/suplier.png",
+      imagePath: "assets/image/suplier.png",
       navigateTo: const MenuProduct(),
     ),
     MenuItemData(
       title: "Product Category",
-      imagePath: "assets/menu-app.png",
+      imagePath: "assets/image/menu-app.png",
       navigateTo: const Kategori(),
     ),
     MenuItemData(
       title: "Manajemen Stok",
-      imagePath: "assets/delivery-box.png",
+      imagePath: "assets/image/delivery-box.png",
       navigateTo: StockManagementPage(),
     ),
     MenuItemData(
         title: "Pembelian barang",
+<<<<<<< HEAD
         imagePath: "assets/keranjang.png",
         navigateTo: PembelianPage(),
+=======
+        imagePath: "assets/image/keranjang.png",
+        navigateTo: SamplePage(),
+>>>>>>> 48e5da6587bc422e4961b67d9fae42c5a9606115
     ),
   ];
 

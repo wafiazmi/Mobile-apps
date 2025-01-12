@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pemrogramanbergerak/pages/login/register.dart';
 import 'package:pemrogramanbergerak/pages/menu_utama.dart';
 // import 'package:kasir_pintar_2/pages/pengguna/pengguna_page.dart';
 // import 'package:kasir_pintar_2/services/api_services.dart';
@@ -79,11 +80,15 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextButton(
               onPressed: () {
-                // Navigasi ke halaman pendaftaran (Register)
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RegisterPage(),
+                  ),
+                );
               },
               child: const Text("Don't have an account? Register here"),
-            ),
-          ],
+            ),          ],
         ),
       ),
     );
