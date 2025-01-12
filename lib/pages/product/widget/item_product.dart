@@ -10,14 +10,14 @@ class ItemProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(barang.nama ?? "Nama tidak tersedia"),
+      title: Text(barang.namaProduk ?? "Nama tidak tersedia"),
       subtitle: Text("Stok: ${barang.stok ?? 0}"),
-      trailing: Text("Rp ${barang.harga_jual ?? 0}"),
+      trailing: Text("Rp ${barang.harga ?? 0}"),
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetail(barang: barang, productId: null,),
+            builder: (context) => ProductDetail(barang: barang, productId: barang.id),
           ),
         );
       },

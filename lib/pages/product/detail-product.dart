@@ -10,7 +10,7 @@ class ProductDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(barang.nama ?? "Nama tidak tersedia"),
+        title: Text(barang.namaProduk ?? "Nama tidak tersedia"),
         backgroundColor: Colors.green,
       ),
       body: Padding(
@@ -19,7 +19,7 @@ class ProductDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              barang.nama ?? "Nama tidak tersedia",
+              barang.namaProduk ?? "Nama tidak tersedia",
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -27,17 +27,28 @@ class ProductDetail extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              "Harga Jual: Rp ${barang.harga_jual}",
+              "Harga: Rp ${barang.harga?.toStringAsFixed(2)}",
               style: const TextStyle(fontSize: 18),
             ),
             Text(
-              "Kode Barang: ${barang.kode_barang}",
+              "Kode: ${barang.kode}",
               style: const TextStyle(fontSize: 18),
             ),
             Text(
               "Stok: ${barang.stok}",
               style: const TextStyle(fontSize: 18),
             ),
+            if (barang.gambar != null) ...[
+              const SizedBox(height: 16),
+              Image.network(barang.gambar!),
+            ],
+            if (barang.kategori != null) ...[
+              const SizedBox(height: 16),
+              Text(
+                "Kategori: ${barang.kategori?.namaKategori}",
+                style: const TextStyle(fontSize: 18),
+              ),
+            ],
             const SizedBox(height: 16),
             const Text(
               "Keterangan:",
