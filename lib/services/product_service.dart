@@ -1,4 +1,3 @@
-//lib\services\product_service.dart
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -55,8 +54,7 @@ class ProductService {
         final Map<String, dynamic> data = jsonDecode(response.body)['data'];
         return Product.fromJson(data);
       } else {
-        throw Exception(
-            'Failed to load product detail: ${response.statusCode}');
+        throw Exception('Failed to load product detail: ${response.statusCode}');
       }
     } on TimeoutException catch (e) {
       throw Exception('Request timeout: $e');
@@ -97,7 +95,7 @@ class ProductService {
   }
 }
 
-    Future<bool> updateProduct(Product product) async {
+  Future<bool> updateProduct(Product product) async {
     try {
       final token = await _getToken();
       final response = await http.put(
@@ -124,32 +122,24 @@ class ProductService {
       throw Exception('Unexpected error: $e');
     }
   }
-}
 
-  Future<Map<String, dynamic>> deleteProduct(int id, dynamic ApiConfig) async {
+  Future<bool> deleteProduct(int id) async {
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token');
+      final token = await _getToken();
       final response = await http.delete(
-        Uri.parse('${ApiConfig.baseUrl}/produk/$id'),
+        Uri.parse('$baseUrl/$id'),
         headers: {
           'Authorization': 'Bearer $token',
         },
       ).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        return true; // Berhasil menghapus
       } else {
-        throw Exception('Failed to delete product: ${response.body}');
+        return false; // Gagal menghapus
       }
-    } on TimeoutException catch (e) {
-      throw Exception('Request timeout: $e');
-    } on http.ClientException catch (e) {
-      throw Exception('Network error: $e');
-    } on FormatException catch (e) {
-      throw Exception('Invalid JSON format: $e');
     } catch (e) {
-      throw Exception('Unexpected error: $e');
+      throw Exception('Failed to delete product: $e');
     }
   }
-
+}
