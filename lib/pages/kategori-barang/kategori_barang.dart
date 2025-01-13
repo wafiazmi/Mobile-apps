@@ -1,33 +1,33 @@
 //lib\pages\kategori-barang\kategori_barang.dart
-import 'package:flutter/material.dart';
-import 'package:pemrogramanbergerak/pages/kategori-barang/models/kategori_model.dart';
-import 'package:pemrogramanbergerak/services/kategori_service.dart';
+import 'package:flutter/material.dart';                                                   //  Paket utama untuk membangun UI Flutter.
+import 'package:pemrogramanbergerak/pages/kategori-barang/models/kategori_model.dart';    // berisi model data kategori untuk mempermudah manipulasi data.
+import 'package:pemrogramanbergerak/services/kategori_service.dart';                      // berkomunikasi dengan API terkait kategori.
 
-class Kategori extends StatefulWidget {
+class Kategori extends StatefulWidget {           // Kategori: Sebuah widget stateful yang akan menampilkan halaman kategori.
   const Kategori({Key? key}) : super(key: key);
 
   @override
-  _KategoriState createState() => _KategoriState();
+  _KategoriState createState() => _KategoriState();   // _KategoriState: State dari widget yang menangani logika dan pembaruan UI.
 }
 
 class _KategoriState extends State<Kategori> {
-  final KategoriService _kategoriService = KategoriService();
-  late Future<List<KategoriModel>> _futureKategori;
+  final KategoriService _kategoriService = KategoriService(); // Instance dari KategoriService untuk mengakses API kategori.
+  late Future<List<KategoriModel>> _futureKategori; // Objek Future yang digunakan untuk menyimpan data kategori dari API.
 
   @override
   void initState() {
     super.initState();
-    _futureKategori = _kategoriService.getKategori();
+    _futureKategori = _kategoriService.getKategori();   // initState: Memanggil fungsi getKategori dari KategoriService untuk mendapatkan data kategori saat halaman dimuat.
   }
 
   // Fungsi untuk menampilkan dialog tambah kategori
   void _showTambahKategoriDialog(BuildContext context) {
-    final TextEditingController _namaController = TextEditingController();
+    final TextEditingController _namaController = TextEditingController();    // TextEditingController: Mengontrol input teks dari pengguna untuk nama kategori.
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
+        return AlertDialog(   // Komponen dialog dengan judul, input teks, dan tombol aksi.
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -145,7 +145,7 @@ class _KategoriState extends State<Kategori> {
                   );
                 }
               },
-              child: const Text('HAPUS'),
+              child: const Text('HAPUS'),  // HAPUS: Memanggil fungsi deleteKategori dari KategoriService untuk menghapus kategori berdasarkan ID.
             ),
           ],
         );
@@ -156,7 +156,7 @@ class _KategoriState extends State<Kategori> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar( // AppBar: Menampilkan header halaman dengan tombol kembali.
         title: const Text('Kategori Barang'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -169,7 +169,7 @@ class _KategoriState extends State<Kategori> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
+            TextField( // TextField: Input pencarian kategori dengan ikon pencarian.
               decoration: InputDecoration(
                 labelText: 'Cari Kategori',
                 prefixIcon: const Icon(Icons.search),
@@ -180,14 +180,14 @@ class _KategoriState extends State<Kategori> {
             ),
             const SizedBox(height: 16),
             Expanded(
-              child: FutureBuilder<List<KategoriModel>>(
-                future: _futureKategori,
+              child: FutureBuilder<List<KategoriModel>>(  // FutureBuilder: Widget yang menampilkan data kategori dari API.
+                future: _futureKategori, // 
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
+                  if (snapshot.connectionState == ConnectionState.waiting) { // ConnectionState.waiting: Menampilkan loading spinner saat data belum selesai dimuat.
                     return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
+                  } else if (snapshot.hasError) { // snapshot.hasError: Menampilkan pesan error jika terjadi kesalahan.
                     return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) { // snapshot.hasData: Menampilkan daftar kategori jika data tersedia atau tidak ada data.
                     return const Center(child: Text('Tidak ada data kategori'));
                   } else {
                     final kategoriList = snapshot.data!;
@@ -215,7 +215,7 @@ class _KategoriState extends State<Kategori> {
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
+      bottomNavigationBar: Padding( // elevatedButton: Tombol untuk membuka dialog tambah kategori.
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
           onPressed: () {
