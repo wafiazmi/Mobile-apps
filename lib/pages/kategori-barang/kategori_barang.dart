@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 //lib\pages\kategori-barang\kategori_barang.dart
 import 'package:flutter/material.dart';                                                   //  Paket utama untuk membangun UI Flutter.
 import 'package:pemrogramanbergerak/pages/kategori-barang/models/kategori_model.dart';    // berisi model data kategori untuk mempermudah manipulasi data.
 import 'package:pemrogramanbergerak/services/kategori_service.dart';                      // berkomunikasi dengan API terkait kategori.
+=======
+import 'package:flutter/material.dart';
+import 'package:pemrogramanbergerak/pages/kategori-barang/models/kategori_model.dart';
+import 'package:pemrogramanbergerak/services/kategori_service.dart';
+>>>>>>> a1139a209bace4835256e95bef01b5f02cf29955
 
 class Kategori extends StatefulWidget {           // Kategori: Sebuah widget stateful yang akan menampilkan halaman kategori.
   const Kategori({Key? key}) : super(key: key);
@@ -156,15 +162,26 @@ class _KategoriState extends State<Kategori> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       appBar: AppBar( // AppBar: Menampilkan header halaman dengan tombol kembali.
         title: const Text('Kategori Barang'),
+=======
+      appBar: AppBar(
+        title: const Text(
+          'Kategori Barang',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+>>>>>>> a1139a209bace4835256e95bef01b5f02cf29955
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
+        backgroundColor: Colors.blue, // Warna AppBar
+        elevation: 0, // Menghilangkan shadow di AppBar
       ),
+<<<<<<< HEAD
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -210,9 +227,77 @@ class _KategoriState extends State<Kategori> {
                     );
                   }
                 },
+=======
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Colors.lightBlueAccent],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Cari Kategori',
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              Expanded(
+                child: FutureBuilder<List<KategoriModel>>(
+                  future: _futureKategori,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(child: Text('Tidak ada data kategori'));
+                    } else {
+                      final kategoriList = snapshot.data!;
+                      return ListView.builder(
+                        itemCount: kategoriList.length,
+                        itemBuilder: (context, index) {
+                          final kategori = kategoriList[index];
+                          return Card(
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            child: ListTile(
+                              title: Text(
+                                kategori.namaKategori ?? '',
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: const Text('Sisa : 8\nModal : Rp 800.000'), // Sesuaikan dengan data yang ada
+                              isThreeLine: true,
+                              trailing: IconButton(
+                                icon: const Icon(Icons.delete, color: Colors.red),
+                                onPressed: () {
+                                  _showHapusKategoriDialog(context, kategori.id!);
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
+>>>>>>> a1139a209bace4835256e95bef01b5f02cf29955
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding( // elevatedButton: Tombol untuk membuka dialog tambah kategori.
@@ -226,7 +311,7 @@ class _KategoriState extends State<Kategori> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.blueAccent,
           ),
           child: const Text(
             'TAMBAH KATEGORI',

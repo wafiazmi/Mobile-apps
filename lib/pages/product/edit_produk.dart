@@ -1,7 +1,6 @@
-// lib\pages\product\edit_produk.dart
 import 'package:flutter/material.dart';
 import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
-import 'package:pemrogramanbergerak/services/product_service.dart'; // Import ProductService
+import 'package:pemrogramanbergerak/services/product_service.dart';
 
 class EditProductScreen extends StatefulWidget {
   final Product product;
@@ -50,13 +49,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Produk'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: _saveProduct,
+        title: Text(
+          'Edit Produk',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
-        ],
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
@@ -65,116 +68,144 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Nama Produk
-              TextFormField(
-                controller: _namaProdukController,
-                decoration: InputDecoration(
-                  labelText: 'Nama Produk*',
-                  border: OutlineInputBorder(),
+              // Card untuk Form Edit Produk
+              Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Nama produk tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      // Nama Produk
+                      TextFormField(
+                        controller: _namaProdukController,
+                        decoration: InputDecoration(
+                          labelText: 'Nama Produk*',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.shopping_bag, color: Colors.blueAccent),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Nama produk tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
 
-              // Kode Produk
-              TextFormField(
-                controller: _kodeController,
-                decoration: InputDecoration(
-                  labelText: 'Kode*',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Kode tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              
+                      // Kode Produk
+                      TextFormField(
+                        controller: _kodeController,
+                        decoration: InputDecoration(
+                          labelText: 'Kode*',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.code, color: Colors.blueAccent),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Kode tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
 
-              // Harga Jual
-              TextFormField(
-                controller: _hargaController,
-                decoration: InputDecoration(
-                  labelText: 'Harga*',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Harga tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
+                      // Harga Jual
+                      TextFormField(
+                        controller: _hargaController,
+                        decoration: InputDecoration(
+                          labelText: 'Harga*',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.attach_money, color: Colors.blueAccent),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Harga tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
 
-              // Stok
-              TextFormField(
-                controller: _stokController,
-                decoration: InputDecoration(
-                  labelText: 'Stok*',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Stok tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
+                      // Stok
+                      TextFormField(
+                        controller: _stokController,
+                        decoration: InputDecoration(
+                          labelText: 'Stok*',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.inventory, color: Colors.blueAccent),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Stok tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
 
-              // Kategori
-              TextFormField(
-                controller: _kategoriController,
-                decoration: InputDecoration(
-                  labelText: 'Kategori',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 16),
+                      // Kategori
+                      TextFormField(
+                        controller: _kategoriController,
+                        decoration: InputDecoration(
+                          labelText: 'Kategori',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.category, color: Colors.blueAccent),
+                        ),
+                      ),
+                      SizedBox(height: 16),
 
-              // Checkbox Tampilkan di Transaksi
-              Row(
-                children: [
-                  Checkbox(
-                    value: true, // Sesuaikan dengan nilai dari produk
-                    onChanged: (value) {
-                      // Logika untuk mengubah nilai
-                    },
+                      // Checkbox Tampilkan di Transaksi
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: true, // Sesuaikan dengan nilai dari produk
+                            onChanged: (value) {
+                              // Logika untuk mengubah nilai
+                            },
+                          ),
+                          Text('Tampilkan di Transaksi'),
+                        ],
+                      ),
+
+                      // Checkbox Pakai Stok
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: true, // Sesuaikan dengan nilai dari produk
+                            onChanged: (value) {
+                              // Logika untuk mengubah nilai
+                            },
+                          ),
+                          Text('Pakai Stok'),
+                        ],
+                      ),
+                    ],
                   ),
-                  Text('Tampilkan di Transaksi'),
-                ],
+                ),
               ),
-
-              // Checkbox Pakai Stok
-              Row(
-                children: [
-                  Checkbox(
-                    value: true, // Sesuaikan dengan nilai dari produk
-                    onChanged: (value) {
-                      // Logika untuk mengubah nilai
-                    },
-                  ),
-                  Text('Pakai Stok'),
-                ],
-              ),
-
               SizedBox(height: 20),
 
               // Tombol Simpan
               Center(
-                child: ElevatedButton(
+                child: ElevatedButton.icon(
                   onPressed: _saveProduct,
-                  child: Text('Simpan'),
+                  icon: Icon(Icons.save, color: Colors.white),
+                  label: Text(
+                    'Simpan',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -184,39 +215,39 @@ class _EditProductScreenState extends State<EditProductScreen> {
     );
   }
 
-void _saveProduct() async {
-  if (_formKey.currentState!.validate()) {
-    final updatedProduct = Product(
-      id: widget.product.id,
-      kode: _kodeController.text,
-      namaProduk: _namaProdukController.text,
-      harga: double.tryParse(_hargaController.text),
-      stok: int.tryParse(_stokController.text),
-      kategori: Kategori(
-        id: widget.product.kategori?.id,
-        namaKategori: _kategoriController.text,
-      ),
-    );
+  void _saveProduct() async {
+    if (_formKey.currentState!.validate()) {
+      final updatedProduct = Product(
+        id: widget.product.id,
+        kode: _kodeController.text,
+        namaProduk: _namaProdukController.text,
+        harga: double.tryParse(_hargaController.text),
+        stok: int.tryParse(_stokController.text),
+        kategori: Kategori(
+          id: widget.product.kategori?.id,
+          namaKategori: _kategoriController.text,
+        ),
+      );
 
-    try {
-      final success = await _productService.updateProduct(updatedProduct);
+      try {
+        final success = await _productService.updateProduct(updatedProduct);
 
-      if (success) {
-        // Panggil callback jika ada
-        if (widget.onProductUpdated != null) {
-          widget.onProductUpdated!(updatedProduct);
+        if (success) {
+          // Panggil callback jika ada
+          if (widget.onProductUpdated != null) {
+            widget.onProductUpdated!(updatedProduct);
+          }
+          Navigator.pop(context, updatedProduct); // Kembali ke halaman sebelumnya
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Gagal mengupdate produk')),
+          );
         }
-        Navigator.pop(context, updatedProduct); // Kembali ke halaman sebelumnya
-      } else {
+      } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Gagal mengupdate produk')),
+          SnackBar(content: Text('Error: $e')),
         );
       }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
     }
   }
-}
 }

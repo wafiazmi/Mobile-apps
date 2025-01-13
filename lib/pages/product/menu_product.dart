@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pemrogramanbergerak/pages/product/detail-product.dart';
 import 'package:pemrogramanbergerak/pages/product/models/product_model.dart';
 import 'package:pemrogramanbergerak/pages/product/tambah-product.dart';
-import 'package:pemrogramanbergerak/pages/product/widget/item_product.dart';
 import 'package:pemrogramanbergerak/services/product_service.dart';
 
 class MenuProduct extends StatefulWidget {
@@ -14,13 +14,13 @@ class MenuProduct extends StatefulWidget {
 class _MenuProductState extends State<MenuProduct> {
   List<Product> products = [];
   final ProductService productService = ProductService();
-  bool isLoading = true; // Tambahkan loading state
-  String errorMessage = ''; // Tambahkan error state
+  bool isLoading = true;
+  String errorMessage = '';
 
   @override
   void initState() {
     super.initState();
-    fetchProducts(); // Panggil method untuk mengambil data
+    fetchProducts(); // Ambil data produk saat pertama kali dibuka
   }
 
   Future<void> fetchProducts() async {
@@ -38,12 +38,9 @@ class _MenuProductState extends State<MenuProduct> {
     }
   }
 
-  void _updateProduct(Product updatedProduct) {
+  void _deleteProduct(int productId) {
     setState(() {
-      final index = products.indexWhere((p) => p.id == updatedProduct.id);
-      if (index != -1) {
-        products[index] = updatedProduct; // Perbarui produk di list
-      }
+      products.removeWhere((product) => product.id == productId); // Hapus produk dari list
     });
   }
 
@@ -52,21 +49,29 @@ class _MenuProductState extends State<MenuProduct> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Produk",
+          "Daftar Produk",
           style: TextStyle(
             fontSize: 24,
-            color: Colors.green,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.white,
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent,
         elevation: 0,
       ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator()) // Tampilkan loading indicator
+          ? const Center(child: CircularProgressIndicator())
           : errorMessage.isNotEmpty
-              ? Center(child: Text(errorMessage)) // Tampilkan pesan error
+              ? Center(child: Text(errorMessage))
               : Container(
-                  color: Colors.grey[200],
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.blueAccent.shade100, Colors.white],
+                    ),
+                  ),
                   child: ListView.builder(
                     itemCount: products.length,
                     itemBuilder: (context, index) {
@@ -74,44 +79,78 @@ class _MenuProductState extends State<MenuProduct> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 5.0),
                         child: Card(
+                          elevation: 5,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-                          elevation: 4,
-                          child: ItemProduct(
-                            barang: products[index],
-                            onProductUpdated: _updateProduct, // Kirim callback ke ItemProduct
+                          child: ListTile(
+                            contentPadding: EdgeInsets.all(16.0),
+                            leading: Icon(
+                              Icons.shopping_bag,
+                              size: 40,
+                              color: Colors.blueAccent,
+                            ),
+                            title: Text(
+                              products[index].namaProduk ?? "N/A",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 5),
+                                Text(
+                                  "Stok: ${products[index].stok ?? 0}",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                                Text(
+                                  "Harga: Rp ${products[index].harga ?? 0}",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.blueAccent,
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProductDetail(
+                                    product: products[index],
+                                    barang: products[index],
+                                    productId: products[index].id,
+                                    onProductDeleted: _deleteProduct, // Kirim callback ke ProductDetail
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       );
                     },
                   ),
                 ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ElevatedButton(
-          onPressed: () async {
-            await Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TambahBarangScreen()),
-            );
-            fetchProducts(); // Refresh data setelah kembali
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green,
-            padding: const EdgeInsets.symmetric(vertical: 15.0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            textStyle: const TextStyle(fontSize: 18),
-          ),
-          child: const Text(
-            "Add Product",
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TambahBarangScreen()),
+          );
+          fetchProducts(); // Refresh data setelah kembali
+        },
+        child: Icon(Icons.add, color: Colors.white),
+        backgroundColor: Colors.blueAccent,
+        elevation: 5,
       ),
     );
   }
