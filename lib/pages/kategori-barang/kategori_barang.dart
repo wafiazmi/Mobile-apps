@@ -294,7 +294,7 @@ class _KategoriState extends State<Kategori> {
                     }
                   },
                 ),
->>>>>>> a1139a209bace4835256e95bef01b5f02cf29955
+>>>>>>> a1139a209bace4835256e95bef0/1b5f02cf29955
               ),
             ],
           ),
